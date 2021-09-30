@@ -1,11 +1,12 @@
-import { ForbiddenError } from "apollo-server-errors"
+import { ForbiddenError, UserInputError } from "apollo-server-errors"
 import { response } from "express"
 
 export{}
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
-const { AuthenticationError, PubSub } = require('apollo-server')
+const { AuthenticationError } = require('apollo-server')
+const { PubSub } = require('graphql-subscriptions')
 
 const pubsub = new PubSub()
 

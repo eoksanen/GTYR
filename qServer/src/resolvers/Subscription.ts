@@ -1,7 +1,8 @@
 export{}
 const mutation = require('./mutation.ts')
 
-const { AuthenticationError, PubSub } = require('apollo-server')
+const { AuthenticationError } = require('apollo-server')
+const { PubSub } = require('graphql-subscriptions')
 
 const pubsub = new PubSub()
 

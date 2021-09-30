@@ -1,17 +1,17 @@
 const { ApolloServer, UserInputError, gql } = require('apollo-server')
 
-//const mongoose = require('mongoose')
+const mongoosei = require('mongoose')
 const jwt = require('jsonwebtoken')
 const user = require('./src/models/user')
 const config = require('./src/utils/config')
 
-//const requireGraphQLFile = require('require-graphql-file')
+const requireGraphQLFile = require('require-graphql-file')
 
 const Subscription = require('./src/resolvers/Subscription')
-const Mutation = require('./resolvers/Mutation')
-const Query = require('./resolvers/Query')
-const resolvers = require('./resolvers/resolvers')
-//const typeD = requireGraphQLFile('./graphql/schema')
+const Mutation = require('./src/resolvers/Mutation')
+const Query = require('./src/resolvers/Query')
+const resolvers = require('./src/resolvers/resolvers')
+const typeD = requireGraphQLFile('./graphql/schema')
 
 // import { Query } from './resolvers/Query'
 // import Mutation from './resolvers/Mutation'
@@ -23,7 +23,7 @@ const MONGODB_URI = config.MONGODB_URI
 
 console.log('connecting to', MONGODB_URI)
 
-user.mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoosei.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  })
   .then(() => {
     console.log('connected to MongoDB')
   })
@@ -35,7 +35,7 @@ user.mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: 
 //console.log(typeD)
 
 const server = new ApolloServer({
-    typeDefs: './graphql/schema',
+    typeDefs: typeD,
     resolvers,
     context: async ({ req }) => {
       const auth = req ? req.headers.authorization : null

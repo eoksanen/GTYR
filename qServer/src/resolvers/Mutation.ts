@@ -1,10 +1,12 @@
+import { UserInputError } from "apollo-server-errors"
 import { response } from "express"
 
 export{}
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
-const { AuthenticationError, ForbiddenError, PubSub } = require('apollo-server')
+const { AuthenticationError, ForbiddenError } = require('apollo-server')
+const {PubSub} = require(`@google-cloud/pubsub`);
 
 const pubsub = new PubSub()
 
@@ -40,7 +42,7 @@ const Mutation = {
               invalidArgs: args,
             })
           })
-        pubsub.publish('USER_ADDED', { userAdded: user })
+    //    pubsub.publish('USER_ADDED', { userAdded: user })
         return user
   
       },
@@ -85,11 +87,11 @@ const Mutation = {
       return { value: jwt.sign(userForToken, process.env.SECRET) }
     },
 }
-/*
+
 const Subscription = {
   userAdded: {
     subscribe: () => pubsub.asyncIterator(['USER_ADDED'])
   }
 }
-*/
+
 module.exports = Mutation
