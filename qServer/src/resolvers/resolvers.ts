@@ -5,7 +5,7 @@ export{}
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
-const { AuthenticationError } = require('apollo-server')
+const { AuthenticationError } = require('apollo-server-express')
 const { PubSub } = require('graphql-subscriptions')
 
 const pubsub = new PubSub()
@@ -14,7 +14,7 @@ const pubsub = new PubSub()
 const resolvers = {
 
 Query: {
-    me: async (root, args, context) => {
+    me: async (context: { currentUser: any }) => {
 
       return context.currentUser
 
@@ -25,7 +25,7 @@ Query: {
 },
 
 Mutation: {
-    createUser: async (root, args, {currentUser} ) => {
+    createUser: async (args: { password: string | any[]; username: any; name: any }, {currentUser}: any ) => {
 
         if (!currentUser) {
           throw new AuthenticationError("not authenticated")
@@ -59,7 +59,7 @@ Mutation: {
         return user
   
       },
-      removeUser: async (root, args, {currentUser} ) => {
+      removeUser: async (args: { id: any }, {currentUser}: any ) => {
         console.log('args ',args,)
 
         if (!currentUser) {
@@ -80,7 +80,7 @@ Mutation: {
 
 
       },
-      login: async ( root, args ) => {
+      login: async (args: { username: any; password: any } ) => {
         console.log('args ',args, '/n password')
         const user = await User.findOne({ username: args.username})
         console.log('user ', user)

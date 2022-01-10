@@ -1,0 +1,22 @@
+// apollo-server/tsconfig.json
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "outDir": "./lib",
+      "rootDir": "./src",
+      "removeComments": true,
+      "strict": true,
+      "noImplicitAny": false,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    }
+  }
